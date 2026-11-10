@@ -35,7 +35,6 @@ export const ScientificHonesty: React.FC<ScientificHonestyProps> = ({
     }
   }, [isOpen]);
 
-  // Mandatory light-dismiss fallback for browsers without native HTMLDialogElement.prototype.closedBy
   useEffect(() => {
     const dialog = dialogRef.current;
     if (!dialog) return;
@@ -63,137 +62,136 @@ export const ScientificHonesty: React.FC<ScientificHonestyProps> = ({
       {...({ closedby: 'any' } as any)}
       aria-labelledby={titleId}
       onClose={onClose}
-      className="w-full max-w-3xl rounded-2xl bg-space-900 text-white border border-white/15 shadow-2xl p-0 overflow-hidden"
+      className="w-full max-w-2xl rounded-2xl bg-[#081226] text-slate-100 border border-white/[0.08] shadow-2xl p-0 overflow-hidden"
     >
-      {/* Modal Header */}
-      <div className="p-5 bg-space-950 border-b border-white/10 flex items-center justify-between">
+      {/* Header */}
+      <div className="p-4 px-5 bg-[#060D1E] border-b border-white/[0.06] flex items-center justify-between">
         <div className="flex items-center gap-2.5">
-          <div className="w-9 h-9 rounded-xl bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center">
-            <ShieldCheck className="w-5 h-5 text-emerald-400" />
-          </div>
+          <ShieldCheck className="w-4 h-4 text-emerald-400" />
           <div>
-            <h2 id={titleId} className="text-base font-extrabold text-white">
-              Scientific Validation, Ground-Truthing &amp; Sensor Limitations
+            <h2 id={titleId} className="text-sm font-semibold tracking-wide text-white">
+              Scientific Validation &amp; Methodological Limits
             </h2>
-            <p className="text-xs text-slate-300">
-              Cauchy&apos;s Comet Methodological Transparency Checklist (Scene 8)
+            <p className="text-[11px] text-slate-400">
+              Honesty and validity protocol for {dataset.aoi.name}
             </p>
           </div>
         </div>
         <button
           type="button"
           onClick={() => dialogRef.current?.close()}
-          aria-label="Close validation modal"
-          className="p-1.5 rounded-lg bg-space-800 hover:bg-space-700 text-slate-300 hover:text-white"
+          aria-label="Close dialog"
+          className="p-1 rounded-md bg-[#0D182E] text-slate-400 hover:text-white transition-colors"
         >
           <X className="w-4 h-4" />
         </button>
       </div>
 
-      {/* Modal Content */}
-      <div className="p-5 space-y-5 max-h-[75vh] overflow-y-auto text-xs leading-relaxed">
-        {/* 3 Verification Pillars */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-          <div className="bg-space-950/80 border border-emerald-500/30 rounded-xl p-3.5 space-y-1.5">
-            <div className="flex items-center gap-1.5 font-bold text-emerald-400">
-              <CheckCircle2 className="w-4 h-4 shrink-0" />
-              <span>1. Overlap Transition Check</span>
+      {/* Body */}
+      <div className="p-5 space-y-4 max-h-[75vh] overflow-y-auto text-xs leading-relaxed">
+        {/* 3 Unified Validation Cards (No Rainbow Alert Boxes) */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-2.5">
+          <div className="bg-[#060D1E] border border-white/[0.06] rounded-xl p-3 space-y-1.5">
+            <div className="flex items-center gap-1.5 text-white font-medium text-xs">
+              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+              <span>Overlap Transition</span>
             </div>
-            <p className="text-slate-300">
-              Calibrated across <strong>13 concurrent overlap years (2012–2024)</strong> where Aqua-MODIS and S-NPP VIIRS shared the ~13:30 local equatorial crossing time.
+            <p className="text-[11px] text-slate-400">
+              Calibrated across 13 co-flight years (2012–2024) where Aqua and S-NPP shared the 13:30 overpass.
             </p>
-            <div className="pt-1 font-mono text-[11px] text-amber-solar">
-              Fit R² = {dataset.metrics.overlapRSquared.toFixed(2)} | α={dataset.aoi.calibrationAlpha}, β={dataset.aoi.calibrationBeta}
+            <div className="pt-1 font-mono text-[10px] text-amber-300">
+              Fit R² = {dataset.metrics.overlapRSquared.toFixed(2)} (α={dataset.aoi.calibrationAlpha}, β={dataset.aoi.calibrationBeta})
             </div>
           </div>
 
-          <div className="bg-space-950/80 border border-sky-500/30 rounded-xl p-3.5 space-y-1.5">
-            <div className="flex items-center gap-1.5 font-bold text-sky-400">
-              <FileCheck2 className="w-4 h-4 shrink-0" />
-              <span>2. Burned-Area Ground Truth</span>
+          <div className="bg-[#060D1E] border border-white/[0.06] rounded-xl p-3 space-y-1.5">
+            <div className="flex items-center gap-1.5 text-white font-medium text-xs">
+              <FileCheck2 className="w-3.5 h-3.5 text-sky-400 shrink-0" />
+              <span>Burned-Area Truth</span>
             </div>
-            <p className="text-slate-300">
-              Validated against NASA&apos;s independent <strong>MCD64A1 Burned Area</strong> reflectance product, which measures post-fire char scar area rather than instantaneous thermal pulses.
+            <p className="text-[11px] text-slate-400">
+              Validated against NASA MCD64A1 surface burn scars, which measure burned area rather than thermal pulses.
             </p>
-            <div className="pt-1 font-mono text-[11px] text-sky-300">
+            <div className="pt-1 font-mono text-[10px] text-sky-300">
               Correlation r = {dataset.metrics.mcd64a1Correlation.toFixed(2)} (p &lt; 0.001)
             </div>
           </div>
 
-          <div className="bg-space-950/80 border border-amber-500/30 rounded-xl p-3.5 space-y-1.5">
-            <div className="flex items-center gap-1.5 font-bold text-amber-solar">
-              <Satellite className="w-4 h-4 shrink-0" />
-              <span>3. Discontinuity Removal</span>
+          <div className="bg-[#060D1E] border border-white/[0.06] rounded-xl p-3 space-y-1.5">
+            <div className="flex items-center gap-1.5 text-white font-medium text-xs">
+              <Satellite className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+              <span>Discontinuity Removal</span>
             </div>
-            <p className="text-slate-300">
-              Raw unharmonized counts jumped <strong>+{dataset.metrics.rawArtificialJumpPct}%</strong> in 2012. Harmonization isolates the true multi-decadal ecological shift of{' '}
-              <strong>{dataset.metrics.harmonizedRealChangePct >= 0 ? `+${dataset.metrics.harmonizedRealChangePct}%` : `${dataset.metrics.harmonizedRealChangePct}%`}</strong>.
+            <p className="text-[11px] text-slate-400">
+              Raw counts leapt +{dataset.metrics.rawArtificialJumpPct}% in 2012. Harmonization isolates true multi-year shift of {dataset.metrics.harmonizedRealChangePct >= 0 ? `+${dataset.metrics.harmonizedRealChangePct}%` : `${dataset.metrics.harmonizedRealChangePct}%`}.
             </p>
+            <div className="pt-1 font-mono text-[10px] text-slate-300">
+              Sensor bias eliminated
+            </div>
           </div>
         </div>
 
-        {/* Mathematical Formulation */}
-        <div className="bg-space-950/90 border border-white/10 rounded-xl p-4 space-y-2">
-          <h3 className="text-xs font-bold uppercase tracking-wider text-amber-solar">
-            Harmonization Transfer Function &amp; Anomaly Indexing
-          </h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 font-mono text-[11px] bg-space-900 p-3 rounded-lg border border-white/10">
-            <div>
-              <div className="text-slate-300 mb-1">// Step 1: Power-Law Sensor Calibration</div>
-              <div className="text-amber-solar font-bold">
+        {/* Clean Mathematical Formulation */}
+        <div className="bg-[#060D1E] border border-white/[0.06] rounded-xl p-3.5 space-y-2">
+          <div className="text-[10px] uppercase font-mono tracking-wider text-slate-400">
+            Harmonization Equations
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+            <div className="p-2.5 rounded-lg bg-[#0A1428] border border-white/[0.04]">
+              <div className="font-mono text-amber-300 font-semibold mb-1 text-[11px]">
                 N_VIIRS_eq(t) = α · (N_MODIS(t))^β
               </div>
-              <div className="text-slate-300 mt-1">
-                Accounts for sub-linear clustering of multiple 375m VIIRS active fire pixels inside a single 1km MODIS thermal footprint.
-              </div>
+              <p className="text-[11px] text-slate-400">
+                Accounts for sub-linear clustering where multiple 375m VIIRS detections fall into one 1km MODIS footprint.
+              </p>
             </div>
-            <div>
-              <div className="text-slate-300 mb-1">// Step 2: Standardized Fire Anomaly Index</div>
-              <div className="text-emerald-300 font-bold">
-                SFAI(y, w) = (N_harm(y, w) - Median(w)) / IQR(w)
+
+            <div className="p-2.5 rounded-lg bg-[#0A1428] border border-white/[0.04]">
+              <div className="font-mono text-emerald-300 font-semibold mb-1 text-[11px]">
+                SFAI(y, w) = (N_harm - Median_w) / IQR_w
               </div>
-              <div className="text-slate-300 mt-1">
-                Non-parametric interquartile standardization resilient to extreme megafire outliers.
-              </div>
+              <p className="text-[11px] text-slate-400">
+                Interquartile standardized anomaly score, resilient to extreme wildfire outliers and climate skew.
+              </p>
             </div>
           </div>
         </div>
 
-        {/* Openly Stated Sensor & Physical Limits */}
-        <div className="bg-space-950/90 border border-rose-500/30 rounded-xl p-4 space-y-2.5">
-          <div className="flex items-center gap-2 font-bold text-rose-300 text-xs uppercase tracking-wider">
-            <CloudOff className="w-4 h-4 text-rose-400" />
-            <span>Stated Operational Limitations (Communicated to Responders)</span>
+        {/* Stated Limits (Calm Slate Card, No Harsh Red Alert Box) */}
+        <div className="bg-[#060D1E] border border-white/[0.06] rounded-xl p-3.5 space-y-2">
+          <div className="flex items-center gap-1.5 text-slate-300 text-xs font-semibold">
+            <CloudOff className="w-3.5 h-3.5 text-slate-400" />
+            <span>Stated Operational Limitations</span>
           </div>
-          <ul className="space-y-1.5 text-slate-300 list-disc list-inside">
+          <ul className="space-y-1.5 text-[11px] text-slate-400 list-disc list-inside">
             <li>
-              <strong>Cloud &amp; Heavy Monsoon Obscuration:</strong> Thermal infrared (MIR/TIR) sensors cannot penetrate optically thick convective clouds; pre-monsoon cloud cover in South Asia can under-count short-lived agricultural burns.
+              <strong>Cloud &amp; Monsoon Obscuration:</strong> Mid-infrared sensors cannot penetrate thick convective clouds; pre-monsoon cloud cover can cause under-counting of brief agricultural fires.
             </li>
             <li>
-              <strong>Thick Smoke Plumes &amp; Canopy Attenuation:</strong> Low-intensity surface/understory fires beneath closed tropical canopies (such as dense Chattogram hill forest) may not reach detection threshold until canopy breach.
+              <strong>Canopy Smoke Attenuation:</strong> Low-intensity understory burns beneath dense tropical canopies may not breach detection thresholds until canopy opening.
             </li>
             <li>
-              <strong>Diurnal Overpass Sampling Windows:</strong> Sun-synchronous polar orbiters sample ~10:30 (Terra) and ~13:30 (Aqua, S-NPP, NOAA-20/21). Fast-burning flash agricultural fires ignited and extinguished between overpasses may go undetected.
+              <strong>Diurnal Overpass Windows:</strong> Orbiters sample ~10:30 (Terra) and ~13:30 (Aqua, S-NPP, NOAA-20). Quick fires lit and extinguished between overpasses remain unobserved.
             </li>
             <li>
-              <strong>Static Industrial Thermal Sources:</strong> Gas flares, brick kilns, and steel plants emit persistent TIR anomalies; regional interpretation should account for stationary industrial heat sources.
+              <strong>Static Thermal Features:</strong> Industrial flaring and brick kilns produce persistent thermal signals that require regional contextual masking.
             </li>
           </ul>
         </div>
       </div>
 
-      {/* Modal Footer */}
-      <div className="p-4 bg-space-950 border-t border-white/10 flex items-center justify-between text-xs">
-        <span className="text-slate-300 flex items-center gap-1.5">
-          <AlertCircle className="w-3.5 h-3.5 text-amber-solar" />
-          Data Sources: NASA Earthdata FIRMS (MODIS C6.1, VIIRS S-NPP/NOAA-20) &amp; MCD64A1
+      {/* Footer */}
+      <div className="p-3 px-5 bg-[#060D1E] border-t border-white/[0.06] flex items-center justify-between text-xs text-slate-400">
+        <span className="flex items-center gap-1.5 text-[11px]">
+          <AlertCircle className="w-3 h-3 text-slate-400" />
+          NASA FIRMS &amp; MCD64A1 Data
         </span>
         <button
           type="button"
           onClick={() => dialogRef.current?.close()}
-          className="px-4 py-1.5 rounded-lg bg-amber-fire hover:bg-amber-glow text-space-950 font-bold"
+          className="px-3 py-1 rounded-md bg-[#102040] hover:bg-[#162B54] text-white font-medium transition-colors"
         >
-          Close Inspector
+          Close
         </button>
       </div>
     </dialog>
