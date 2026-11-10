@@ -24,6 +24,9 @@ export default {
       fontFamily: {
         sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
         mono: ['JetBrains Mono', 'Fira Code', 'monospace'],
+      },
+      gridTemplateColumns: {
+        52: 'repeat(52, minmax(0, 1fr))',
       }
     },
   },
