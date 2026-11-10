@@ -312,77 +312,84 @@ export function App() {
         liveHotspots={liveHotspots}
       />
 
-      {/* Team Roster Modal (Modernized Minimal Look) */}
+      {/* Team Roster Modal (Generous Dimensions & Legible Typography) */}
       <dialog
         ref={teamDialogRef}
         {...({ closedby: 'any' } as any)}
         aria-labelledby={teamTitleId}
         onClose={() => setIsTeamOpen(false)}
-        className="w-full max-w-xl rounded-2xl bg-[#081226] text-white border border-white/10 shadow-2xl p-0 overflow-hidden"
+        className="w-full max-w-3xl rounded-2xl bg-[#081226] text-white border border-white/10 shadow-2xl p-0 overflow-hidden"
       >
-        <div className="p-4 px-5 bg-[#060D1E] border-b border-white/[0.06] flex items-center justify-between">
-          <div className="flex items-center gap-2.5">
+        <div className="p-4 px-6 bg-[#060D1E] border-b border-white/[0.06] flex items-center justify-between">
+          <div className="flex items-center gap-3">
             <img
               src="./brand/logo-icon.svg"
               alt="Cauchy's Comet"
-              className="w-5 h-5 object-contain"
+              className="w-6 h-6 object-contain"
             />
-            <h2 id={teamTitleId} className="text-xs font-bold tracking-wider uppercase text-white">
-              Team Cauchy&apos;s Comet · Chattogram
-            </h2>
+            <div>
+              <h2 id={teamTitleId} className="text-sm font-bold tracking-wider uppercase text-white">
+                Team Cauchy&apos;s Comet · Chattogram
+              </h2>
+              <p className="text-[11px] text-slate-400 mt-0.5">
+                2026 NASA International Space Apps Challenge
+              </p>
+            </div>
           </div>
           <button
             type="button"
             onClick={() => teamDialogRef.current?.close()}
             aria-label="Close dialog"
-            className="p-1 rounded-md bg-[#0D182E] text-slate-400 hover:text-white transition-colors"
+            className="p-1.5 rounded-lg bg-[#0D182E] text-slate-400 hover:text-white hover:bg-[#162646] transition-colors"
           >
-            <X className="w-3.5 h-3.5" />
+            <X className="w-4 h-4" />
           </button>
         </div>
 
-        <div className="p-5 space-y-4 text-xs">
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
+        <div className="p-6 space-y-5">
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
             {TEAM_MEMBERS.map((member) => (
               <div
                 key={member.handle}
-                className="bg-[#060D1E] border border-white/[0.04] rounded-xl p-3 flex flex-col items-center text-center"
+                className="bg-[#060D1E] border border-white/[0.06] hover:border-amber-400/30 transition-all rounded-xl p-4 flex flex-col items-center text-center shadow-sm"
               >
-                <img
-                  src={member.avatar}
-                  alt={member.name}
-                  className="w-16 h-16 object-contain mb-2 rounded-full"
-                />
-                <div className="font-semibold text-white text-[11px] leading-tight">
+                <div className="relative mb-3">
+                  <img
+                    src={member.avatar}
+                    alt={member.name}
+                    className="w-20 h-20 sm:w-24 sm:h-24 object-contain rounded-full ring-2 ring-white/10 bg-[#0B1B3A]/60 p-1"
+                  />
+                </div>
+                <div className="font-bold text-white text-xs sm:text-sm leading-snug">
                   {member.name}
                 </div>
-                <div className="text-[10px] font-mono text-amber-300 mt-0.5">
+                <div className="text-[11px] sm:text-xs font-mono text-amber-300 mt-1">
                   {member.handle}
                 </div>
-                <div className="text-[10px] text-slate-400 mt-1 leading-snug">
+                <div className="text-[11px] sm:text-xs text-slate-300 mt-1.5 leading-snug">
                   {member.role}
                 </div>
               </div>
             ))}
           </div>
 
-          <div className="bg-[#060D1E] border border-white/[0.04] rounded-lg p-2.5 flex items-center justify-between text-[11px] text-slate-400">
-            <span className="flex items-center gap-1.5">
-              <MapPin className="w-3 h-3 text-amber-400" />
-              Chattogram, Bangladesh
+          <div className="bg-[#060D1E] border border-white/[0.06] rounded-xl p-3 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-slate-300">
+            <span className="flex items-center gap-2">
+              <MapPin className="w-3.5 h-3.5 text-amber-400" />
+              Local Event: Chattogram, Bangladesh
             </span>
-            <span className="flex items-center gap-1 text-emerald-400">
-              <CheckCircle2 className="w-3 h-3" />
-              Harmonization of MODIS &amp; VIIRS Hot Spots
+            <span className="flex items-center gap-1.5 text-emerald-400 font-medium">
+              <CheckCircle2 className="w-3.5 h-3.5" />
+              Challenge: Harmonization of MODIS and VIIRS Hot Spots
             </span>
           </div>
         </div>
 
-        <div className="p-3 px-5 bg-[#060D1E] border-t border-white/[0.06] flex justify-end">
+        <div className="p-3.5 px-6 bg-[#060D1E] border-t border-white/[0.06] flex justify-end">
           <button
             type="button"
             onClick={() => teamDialogRef.current?.close()}
-            className="px-3 py-1 rounded bg-[#102040] hover:bg-[#162B54] text-white font-medium text-xs transition-colors"
+            className="px-4 py-1.5 rounded-lg bg-[#102040] hover:bg-[#162B54] text-white font-medium text-xs transition-colors"
           >
             Close
           </button>
