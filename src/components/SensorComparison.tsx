@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import {
-  Eye,
+  Layers,
   TrendingUp,
 } from 'lucide-react';
 import { HarmonizedDataset, WeeklyFireRecord } from '../types/fire';
@@ -69,7 +69,7 @@ export const SensorComparison: React.FC<SensorComparisonProps> = ({
           <button
             type="button"
             onClick={() => setActiveTab('stacked-monitors')}
-            className={`px-2 py-0.5 rounded font-medium transition-colors ${
+            className={`px-2.5 py-1 rounded-md font-medium transition-colors ${
               activeTab === 'stacked-monitors'
                 ? 'bg-[#142344] text-white font-semibold'
                 : 'text-slate-400 hover:text-slate-200'
@@ -81,13 +81,13 @@ export const SensorComparison: React.FC<SensorComparisonProps> = ({
           <button
             type="button"
             onClick={() => setActiveTab('two-eyes')}
-            className={`px-2 py-0.5 rounded font-medium transition-colors ${
+            className={`px-2.5 py-1 rounded-md font-medium transition-colors ${
               activeTab === 'two-eyes'
                 ? 'bg-[#142344] text-white font-semibold'
                 : 'text-slate-400 hover:text-slate-200'
             }`}
           >
-            <Eye className="w-3 h-3 inline mr-1" />
+            <Layers className="w-3 h-3 inline mr-1" />
             Sensors
           </button>
         </div>
@@ -211,34 +211,32 @@ export const SensorComparison: React.FC<SensorComparisonProps> = ({
           </div>
         </div>
       ) : (
-        /* Minimal Two Sensors Comparison */
-        <div className="bg-[#060D1E] rounded-xl p-4 grid grid-cols-2 gap-4 text-center text-xs">
-          <div>
-            <div className="w-24 h-24 mx-auto grid grid-cols-3 grid-rows-3 border border-sky-400/40">
-              {Array.from({ length: 9 }).map((_, i) => (
-                <div key={i} className="border border-sky-400/20 flex items-center justify-center">
-                  {i === 4 && <span className="w-2.5 h-2.5 rounded-full bg-amber-400" />}
-                </div>
-              ))}
+        /* Refined Sensor Optics Overview */
+        <div className="bg-[#060D1E] rounded-xl p-4 grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+          <div className="p-3 rounded-lg bg-[#0A1428] border border-white/[0.04] space-y-2">
+            <div className="flex items-center justify-between">
+              <span className="font-semibold text-white">MODIS Instrument</span>
+              <span className="font-mono text-[10px] text-sky-400">Terra &amp; Aqua</span>
             </div>
-            <div className="mt-2 font-mono text-[11px] text-slate-300">
-              MODIS (1 km)
+            <div className="font-mono text-[11px] text-slate-300">
+              1,000 m pixel footprint (2000–Present)
             </div>
-            <div className="text-[10px] text-slate-400">Coarser footprint</div>
+            <p className="text-[11px] text-slate-400">
+              Provides the long-term 25-year historical baseline, but misses small or low-intensity understory and agricultural fires.
+            </p>
           </div>
 
-          <div>
-            <div className="w-24 h-24 mx-auto grid grid-cols-6 grid-rows-6 border border-amber-400/40">
-              {Array.from({ length: 36 }).map((_, i) => (
-                <div key={i} className="border border-amber-400/20 flex items-center justify-center">
-                  {[7, 14, 21].includes(i) && <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />}
-                </div>
-              ))}
+          <div className="p-3 rounded-lg bg-[#0A1428] border border-white/[0.04] space-y-2">
+            <div className="flex items-center justify-between">
+              <span className="font-semibold text-white">VIIRS Instrument</span>
+              <span className="font-mono text-[10px] text-amber-400">S-NPP &amp; NOAA-20</span>
             </div>
-            <div className="mt-2 font-mono text-[11px] text-amber-300">
-              VIIRS (375 m)
+            <div className="font-mono text-[11px] text-amber-300">
+              375 m pixel footprint (2012–Present)
             </div>
-            <div className="text-[10px] text-slate-400">High sensitivity</div>
+            <p className="text-[11px] text-slate-400">
+              Detects fires down to ~1/10th the radiative power. Cauchy&apos;s Comet scales MODIS into VIIRS-equivalent units for a seamless time series.
+            </p>
           </div>
         </div>
       )}

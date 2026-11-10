@@ -170,11 +170,11 @@ export function App() {
       <main className="flex-1 max-w-[1560px] w-full mx-auto px-4 sm:px-6 py-4 space-y-4">
         {/* Sleek Context Sub-Header */}
         <section className="flex flex-wrap items-center justify-between gap-3 border-b border-white/[0.06] pb-3">
-          <div className="flex items-center gap-3">
-            <h1 className="text-base sm:text-lg font-bold text-white tracking-tight">
+          <div className="flex items-center gap-2.5">
+            <h1 className="text-sm sm:text-base font-bold text-white tracking-tight">
               {selectedAoi.name}
             </h1>
-            <span className="text-xs text-slate-400">·</span>
+            <span className="text-slate-500">·</span>
             <span className="text-xs text-slate-400">{selectedAoi.ecosystem}</span>
           </div>
 
@@ -247,7 +247,7 @@ export function App() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
             <div className="bg-[#060D1E] rounded-xl p-3 space-y-1 border border-white/[0.04]">
-              <div className="flex items-center gap-2 text-white font-semibold text-xs">
+              <div className="flex items-center gap-2 text-white font-medium text-xs">
                 <HardHat className="w-3.5 h-3.5 text-slate-400" />
                 <span>Responders</span>
               </div>
@@ -258,7 +258,7 @@ export function App() {
             </div>
 
             <div className="bg-[#060D1E] rounded-xl p-3 space-y-1 border border-white/[0.04]">
-              <div className="flex items-center gap-2 text-white font-semibold text-xs">
+              <div className="flex items-center gap-2 text-white font-medium text-xs">
                 <Microscope className="w-3.5 h-3.5 text-slate-400" />
                 <span>Scientists</span>
               </div>
@@ -268,7 +268,7 @@ export function App() {
             </div>
 
             <div className="bg-[#060D1E] rounded-xl p-3 space-y-1 border border-white/[0.04]">
-              <div className="flex items-center gap-2 text-white font-semibold text-xs">
+              <div className="flex items-center gap-2 text-white font-medium text-xs">
                 <Trees className="w-3.5 h-3.5 text-slate-400" />
                 <span>Land Managers</span>
               </div>
@@ -312,37 +312,37 @@ export function App() {
         liveHotspots={liveHotspots}
       />
 
-      {/* Team Roster Modal */}
+      {/* Team Roster Modal (Modernized Minimal Look) */}
       <dialog
         ref={teamDialogRef}
         {...({ closedby: 'any' } as any)}
         aria-labelledby={teamTitleId}
         onClose={() => setIsTeamOpen(false)}
-        className="w-full max-w-2xl rounded-2xl bg-[#081226] text-white border border-white/10 shadow-2xl p-0 overflow-hidden"
+        className="w-full max-w-xl rounded-2xl bg-[#081226] text-white border border-white/10 shadow-2xl p-0 overflow-hidden"
       >
-        <div className="p-4 bg-[#060D1E] border-b border-white/[0.06] flex items-center justify-between">
+        <div className="p-4 px-5 bg-[#060D1E] border-b border-white/[0.06] flex items-center justify-between">
           <div className="flex items-center gap-2.5">
             <img
               src="/brand/logo-icon.svg"
               alt="Cauchy's Comet"
-              className="w-6 h-6 object-contain"
+              className="w-5 h-5 object-contain"
             />
-            <h2 id={teamTitleId} className="text-sm font-bold tracking-wider text-white">
-              TEAM CAUCHY&apos;S COMET · CHATTOGRAM
+            <h2 id={teamTitleId} className="text-xs font-bold tracking-wider uppercase text-white">
+              Team Cauchy&apos;s Comet · Chattogram
             </h2>
           </div>
           <button
             type="button"
             onClick={() => teamDialogRef.current?.close()}
-            aria-label="Close team modal"
-            className="p-1 rounded-md bg-[#0D182E] text-slate-400 hover:text-white"
+            aria-label="Close dialog"
+            className="p-1 rounded-md bg-[#0D182E] text-slate-400 hover:text-white transition-colors"
           >
             <X className="w-3.5 h-3.5" />
           </button>
         </div>
 
         <div className="p-5 space-y-4 text-xs">
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
             {TEAM_MEMBERS.map((member) => (
               <div
                 key={member.handle}
@@ -351,15 +351,17 @@ export function App() {
                 <img
                   src={member.avatar}
                   alt={member.name}
-                  className="w-18 h-18 object-contain mb-2 rounded-full"
+                  className="w-16 h-16 object-contain mb-2 rounded-full"
                 />
-                <div className="font-semibold text-white text-[11px]">
+                <div className="font-semibold text-white text-[11px] leading-tight">
                   {member.name}
                 </div>
                 <div className="text-[10px] font-mono text-amber-300 mt-0.5">
                   {member.handle}
                 </div>
-                <div className="text-[10px] text-slate-400 mt-1">{member.role}</div>
+                <div className="text-[10px] text-slate-400 mt-1 leading-snug">
+                  {member.role}
+                </div>
               </div>
             ))}
           </div>
@@ -376,11 +378,11 @@ export function App() {
           </div>
         </div>
 
-        <div className="p-3 bg-[#060D1E] border-t border-white/[0.06] flex justify-end">
+        <div className="p-3 px-5 bg-[#060D1E] border-t border-white/[0.06] flex justify-end">
           <button
             type="button"
             onClick={() => teamDialogRef.current?.close()}
-            className="px-3 py-1 rounded bg-[#102040] hover:bg-[#162B54] text-white font-medium text-xs"
+            className="px-3 py-1 rounded bg-[#102040] hover:bg-[#162B54] text-white font-medium text-xs transition-colors"
           >
             Close
           </button>

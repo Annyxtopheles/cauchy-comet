@@ -8,17 +8,17 @@ export default {
     extend: {
       colors: {
         space: {
-          950: '#0B1B3A',
-          900: '#10244C',
-          800: '#163063',
-          700: '#1F4080',
-          600: '#2B54A3',
+          950: '#060D1E',
+          900: '#081226',
+          800: '#0C172E',
+          700: '#142344',
+          600: '#1E325C',
         },
-        amber: {
-          fire: '#FF7A00',
-          glow: '#FFA000',
-          solar: '#FFD54F',
-          crimson: '#E65100',
+        earth: {
+          amber: '#F59E0B',
+          gold: '#FBBF24',
+          ochre: '#B45309',
+          espresso: '#3D2B24',
         }
       },
       fontFamily: {
