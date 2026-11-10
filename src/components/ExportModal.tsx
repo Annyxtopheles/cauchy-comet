@@ -4,7 +4,6 @@ import {
   Download,
   FileSpreadsheet,
   FileJson,
-  Filter,
   X,
 } from 'lucide-react';
 import { HarmonizedDataset, LiveHotspot } from '../types/fire';
@@ -40,7 +39,6 @@ export const ExportModal: React.FC<ExportModalProps> = ({
     }
   }, [isOpen]);
 
-  // Mandatory light-dismiss fallback for browsers without native HTMLDialogElement.prototype.closedBy
   useEffect(() => {
     const dialog = dialogRef.current;
     if (!dialog) return;
@@ -72,7 +70,7 @@ export const ExportModal: React.FC<ExportModalProps> = ({
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
-    setDownloadedMessage(`Exported ${filename}`);
+    setDownloadedMessage(`Saved ${filename}`);
     setTimeout(() => setDownloadedMessage(null), 3500);
   };
 
@@ -212,28 +210,23 @@ export const ExportModal: React.FC<ExportModalProps> = ({
       {...({ closedby: 'any' } as any)}
       aria-labelledby={titleId}
       onClose={onClose}
-      className="w-full max-w-xl rounded-2xl bg-space-900 text-white border border-white/15 shadow-2xl p-0 overflow-hidden"
+      className="w-full max-w-lg rounded-2xl bg-[#081226] text-slate-100 border border-white/[0.08] shadow-2xl p-0 overflow-hidden"
     >
       {/* Header */}
-      <div className="p-5 bg-space-950 border-b border-white/10 flex items-center justify-between">
-        <div className="flex items-center gap-2.5">
-          <div className="w-9 h-9 rounded-xl bg-amber-fire/20 border border-amber-fire/40 flex items-center justify-center">
-            <Download className="w-5 h-5 text-amber-solar" />
-          </div>
-          <div>
-            <h2 id={titleId} className="text-base font-extrabold text-white">
-              Download Harmonized Fire Calendar &amp; Analytics
-            </h2>
-            <p className="text-xs text-slate-300">
-              Export ready-to-use CSV &amp; GeoJSON records for {dataset.aoi.name}
-            </p>
-          </div>
+      <div className="p-4 px-5 bg-[#060D1E] border-b border-white/[0.06] flex items-center justify-between">
+        <div>
+          <h2 id={titleId} className="text-sm font-semibold tracking-wide text-white">
+            Export Harmonized Data &amp; Analytics
+          </h2>
+          <p className="text-[11px] text-slate-400 mt-0.5">
+            {dataset.aoi.name} · 2000–2026 series
+          </p>
         </div>
         <button
           type="button"
           onClick={() => dialogRef.current?.close()}
-          aria-label="Close export modal"
-          className="p-1.5 rounded-lg bg-space-800 hover:bg-space-700 text-slate-300 hover:text-white"
+          aria-label="Close dialog"
+          className="p-1 rounded-md bg-[#0D182E] text-slate-400 hover:text-white transition-colors"
         >
           <X className="w-4 h-4" />
         </button>
@@ -241,27 +234,27 @@ export const ExportModal: React.FC<ExportModalProps> = ({
 
       {/* Body */}
       <div className="p-5 space-y-4 text-xs">
-        {/* Year Range Filter */}
-        <div className="bg-space-950/80 border border-white/10 rounded-xl p-3.5 space-y-2.5">
-          <div className="flex items-center justify-between">
-            <span className="font-bold text-slate-200 flex items-center gap-1.5">
-              <Filter className="w-3.5 h-3.5 text-amber-fire" />
-              Select Date Range for CSV Export
+        {/* Date Range Selector */}
+        <div className="bg-[#060D1E] border border-white/[0.05] rounded-xl p-3.5 space-y-2">
+          <div className="flex items-center justify-between text-[11px]">
+            <span className="text-slate-400 font-medium">
+              Temporal Window
             </span>
-            <span className="font-mono text-amber-solar">
-              {filteredRecordCount.toLocaleString()} weekly rows
+            <span className="font-mono text-amber-300">
+              {filteredRecordCount.toLocaleString()} weekly observations
             </span>
           </div>
 
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-2 gap-2.5">
             <div>
-              <label className="block text-[10px] uppercase tracking-wider text-slate-300 mb-1">
-                Start Year
+              <label className="block text-[10px] text-slate-400 mb-1 font-mono uppercase">
+                From Year
               </label>
               <select
+                aria-label="Start year"
                 value={startYear}
                 onChange={(e) => setStartYear(Math.min(endYear, Number(e.target.value)))}
-                className="w-full px-2.5 py-1.5 rounded-lg bg-space-800 border border-white/15 text-white font-mono"
+                className="w-full px-2.5 py-1.5 rounded-lg bg-[#0C172E] border border-white/[0.08] text-white font-mono text-xs focus:outline-none focus:border-amber-400/40"
               >
                 {Array.from({ length: 27 }, (_, i) => 2000 + i).map((yr) => (
                   <option key={yr} value={yr}>
@@ -271,13 +264,14 @@ export const ExportModal: React.FC<ExportModalProps> = ({
               </select>
             </div>
             <div>
-              <label className="block text-[10px] uppercase tracking-wider text-slate-300 mb-1">
-                End Year
+              <label className="block text-[10px] text-slate-400 mb-1 font-mono uppercase">
+                To Year
               </label>
               <select
+                aria-label="End year"
                 value={endYear}
                 onChange={(e) => setEndYear(Math.max(startYear, Number(e.target.value)))}
-                className="w-full px-2.5 py-1.5 rounded-lg bg-space-800 border border-white/15 text-white font-mono"
+                className="w-full px-2.5 py-1.5 rounded-lg bg-[#0C172E] border border-white/[0.08] text-white font-mono text-xs focus:outline-none focus:border-amber-400/40"
               >
                 {Array.from({ length: 27 }, (_, i) => 2000 + i).map((yr) => (
                   <option key={yr} value={yr}>
@@ -289,63 +283,76 @@ export const ExportModal: React.FC<ExportModalProps> = ({
           </div>
         </div>
 
-        {/* Export Options */}
-        <div className="space-y-2.5">
+        {/* Clean Export Cards (No loud neon orange) */}
+        <div className="space-y-2">
+          {/* Primary CSV Export */}
           <button
             type="button"
             onClick={handleDownloadWeeklyCsv}
-            className="w-full p-3.5 rounded-xl bg-amber-fire hover:bg-amber-glow text-space-950 font-bold flex items-center justify-between transition-all shadow-lg shadow-amber-fire/20"
+            className="w-full p-3 rounded-xl bg-[#0C172E] hover:bg-[#122142] border border-amber-400/25 hover:border-amber-400/50 text-left transition-all group flex items-center justify-between"
           >
-            <div className="flex items-center gap-3 text-left">
-              <FileSpreadsheet className="w-5 h-5 shrink-0" />
+            <div className="flex items-start gap-3">
+              <div className="w-8 h-8 rounded-lg bg-amber-400/10 border border-amber-400/25 flex items-center justify-center shrink-0 mt-0.5">
+                <FileSpreadsheet className="w-4 h-4 text-amber-400" />
+              </div>
               <div>
-                <div className="text-sm font-extrabold">
-                  Download Harmonized Weekly Calendar (.CSV)
+                <div className="text-xs font-semibold text-white group-hover:text-amber-200 transition-colors flex items-center gap-1.5">
+                  <span>Weekly Burning Calendar</span>
+                  <span className="font-mono text-[10px] px-1.5 py-0.2 rounded bg-amber-400/15 text-amber-300">
+                    .CSV
+                  </span>
                 </div>
-                <div className="text-[11px] font-medium opacity-85">
-                  Includes raw MODIS, raw VIIRS, Cauchy harmonized counts, SFAI anomaly &amp; FRP ({startYear}–{endYear})
+                <div className="text-[11px] text-slate-400 mt-0.5">
+                  Raw MODIS &amp; VIIRS counts, Cauchy harmonized series, SFAI anomalies &amp; FRP ({startYear}–{endYear})
                 </div>
               </div>
             </div>
-            <Download className="w-4 h-4 shrink-0" />
+            <Download className="w-4 h-4 text-slate-400 group-hover:text-amber-300 shrink-0 ml-2 transition-colors" />
           </button>
 
+          {/* GeoJSON Export */}
           <button
             type="button"
             onClick={handleDownloadGeoJson}
-            className="w-full p-3.5 rounded-xl bg-space-800 hover:bg-space-700 text-white border border-white/15 font-semibold flex items-center justify-between transition-all"
+            className="w-full p-3 rounded-xl bg-[#0C172E] hover:bg-[#122142] border border-white/[0.07] hover:border-white/[0.15] text-left transition-all group flex items-center justify-between"
           >
-            <div className="flex items-center gap-3 text-left">
-              <FileJson className="w-5 h-5 text-amber-solar shrink-0" />
+            <div className="flex items-start gap-3">
+              <div className="w-8 h-8 rounded-lg bg-sky-400/10 border border-sky-400/20 flex items-center justify-center shrink-0 mt-0.5">
+                <FileJson className="w-4 h-4 text-sky-400" />
+              </div>
               <div>
-                <div className="text-sm font-bold">
-                  Download AOI Polygon &amp; Active Hotspots (.GeoJSON)
+                <div className="text-xs font-semibold text-white group-hover:text-sky-200 transition-colors flex items-center gap-1.5">
+                  <span>AOI Geometry &amp; Active Hotspots</span>
+                  <span className="font-mono text-[10px] px-1.5 py-0.2 rounded bg-sky-400/15 text-sky-300">
+                    .GeoJSON
+                  </span>
                 </div>
-                <div className="text-[11px] text-slate-300">
-                  GIS-ready polygon bounds, calibration parameters, and NRT satellite points
+                <div className="text-[11px] text-slate-400 mt-0.5">
+                  GIS-compatible polygon bounding box and live NRT satellite hotspot coordinates
                 </div>
               </div>
             </div>
-            <Download className="w-4 h-4 text-amber-solar shrink-0" />
+            <Download className="w-4 h-4 text-slate-400 group-hover:text-sky-300 shrink-0 ml-2 transition-colors" />
           </button>
         </div>
 
         {downloadedMessage && (
-          <div className="p-2.5 rounded-lg bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 font-semibold flex items-center gap-2">
-            <Check className="w-4 h-4" />
+          <div className="p-2 rounded-lg bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 font-medium text-xs flex items-center gap-2">
+            <Check className="w-3.5 h-3.5" />
             <span>{downloadedMessage}</span>
           </div>
         )}
       </div>
 
       {/* Footer */}
-      <div className="p-4 bg-space-950 border-t border-white/10 flex justify-end">
+      <div className="p-3 px-5 bg-[#060D1E] border-t border-white/[0.06] flex items-center justify-between text-xs text-slate-400">
+        <span>Ready for QGIS, Python, or spreadsheet analysis</span>
         <button
           type="button"
           onClick={() => dialogRef.current?.close()}
-          className="px-4 py-1.5 rounded-lg bg-space-800 hover:bg-space-700 text-slate-200 font-semibold text-xs"
+          className="px-3 py-1 rounded-md bg-[#102040] hover:bg-[#162B54] text-white font-medium transition-colors"
         >
-          Done
+          Close
         </button>
       </div>
     </dialog>
