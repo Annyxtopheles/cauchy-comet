@@ -29,37 +29,37 @@ const TEAM_MEMBERS = [
   {
     name: 'NASER AL NOMAN',
     handle: '@nasernoman277',
-    avatar: '/team/naser.png',
+    avatar: './team/naser.png',
     role: 'Team Lead & Earth Observation Architecture',
   },
   {
     name: 'ZAID REHMAN',
     handle: '@zaidrehmann',
-    avatar: '/team/zaid.png',
+    avatar: './team/zaid.png',
     role: 'Design, Visual Storytelling & Harmonization UX',
   },
   {
     name: 'SADMAN ZAMAN KHAN',
     handle: '@sadmanzamankhan',
-    avatar: '/team/sadman.png',
+    avatar: './team/sadman.png',
     role: 'Sensor Calibration & Data Systems',
   },
   {
     name: 'MUHAMMAD JUNAYED',
     handle: '@junayedoo7',
-    avatar: '/team/junayed.png',
+    avatar: './team/junayed.png',
     role: 'Geospatial Analytics & FIRMS Integration',
   },
   {
     name: 'ISRAT JAHAN LAMIA',
     handle: '@israt11',
-    avatar: '/team/israt.png',
+    avatar: './team/israt.png',
     role: 'Environmental Science & Fire Regime Research',
   },
   {
     name: 'MD. MEHERAJ HOSSAIN',
     handle: '@mhmahir7',
-    avatar: '/team/meheraj.png',
+    avatar: './team/meheraj.png',
     role: 'Statistical Verification & Web Engineering',
   },
 ];
@@ -323,7 +323,7 @@ export function App() {
         <div className="p-4 px-5 bg-[#060D1E] border-b border-white/[0.06] flex items-center justify-between">
           <div className="flex items-center gap-2.5">
             <img
-              src="/brand/logo-icon.svg"
+              src="./brand/logo-icon.svg"
               alt="Cauchy's Comet"
               className="w-5 h-5 object-contain"
             />

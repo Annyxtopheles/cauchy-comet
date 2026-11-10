@@ -32,7 +32,7 @@ export const Navbar: React.FC<NavbarProps> = ({
         {/* Left: Clean Brand Wordmark */}
         <div className="flex items-center gap-2.5 shrink-0">
           <img
-            src="/brand/logo-icon.svg"
+            src="./brand/logo-icon.svg"
             alt="Cauchy's Comet"
             className="w-6 h-6 object-contain opacity-90"
           />
