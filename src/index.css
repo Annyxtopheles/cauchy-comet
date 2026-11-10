@@ -5,30 +5,27 @@
 :root {
   color-scheme: dark;
   accent-color: #F59E0B;
-  scrollbar-color: #F59E0B #0B1B3A;
+  scrollbar-color: #374151 #060D1E;
   scrollbar-width: auto;
 }
 
 ::selection {
-  background-color: rgba(245, 158, 11, 0.35);
+  background-color: rgba(245, 158, 11, 0.25);
   color: #ffffff;
 }
 
 body {
-  background-color: #071126;
-  background-image:
-    radial-gradient(circle at 85% 15%, rgba(25, 68, 148, 0.38) 0%, transparent 55%),
-    radial-gradient(circle at 15% 80%, rgba(15, 42, 96, 0.45) 0%, transparent 50%),
-    linear-gradient(180deg, #071229 0%, #0B1B3A 50%, #061024 100%);
-  color: #FFFFFF;
+  background-color: #060D1E;
+  background-image: linear-gradient(180deg, #060D1E 0%, #081329 100%);
+  color: #F1F5F9;
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
   margin: 0;
   overflow-x: hidden;
 }
 
 dialog::backdrop {
-  background-color: rgba(5, 11, 26, 0.82);
-  backdrop-filter: blur(6px);
+  background-color: rgba(4, 9, 20, 0.82);
+  backdrop-filter: blur(5px);
 }
 
 input:not(input[type="range"]):user-invalid {
@@ -39,50 +36,24 @@ input:not(input[type="range"]):user-valid {
   border-color: #10b981;
 }
 
-/* Custom Leaflet Dark Space-Navy Topographic Styling (Zero API-Key Tiles) */
+/* Custom Leaflet Topographic Styling */
 .leaflet-container {
-  background: #08152E !important;
+  background: #071126 !important;
   font-family: 'Inter', sans-serif;
 }
 
-/* Filter applied to Esri World Imagery / OSM tiles to create the deep #0B1B3A indigo satellite look from Video Screenshots 2, 3 & 5 */
 .cauchy-navy-tiles {
-  filter: sepia(20%) hue-rotate(175deg) saturate(190%) brightness(0.42) contrast(1.28);
+  filter: sepia(15%) hue-rotate(180deg) saturate(160%) brightness(0.4) contrast(1.25);
 }
 
 .cauchy-satellite-tiles {
-  filter: hue-rotate(15deg) saturate(135%) brightness(0.62) contrast(1.18);
+  filter: saturate(115%) brightness(0.65) contrast(1.15);
 }
 
 .leaflet-popup-content-wrapper,
 .leaflet-popup-tip {
-  background: #0B1B3A !important;
+  background: #09152D !important;
   color: #ffffff !important;
-  border: 1px solid rgba(245, 158, 11, 0.45);
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.65);
-}
-
-.leaflet-control-attribution {
-  background: rgba(7, 17, 38, 0.75) !important;
-  color: #64748b !important;
-  font-size: 9px !important;
-}
-
-.leaflet-control-attribution a {
-  color: #94a3b8 !important;
-}
-
-@keyframes pulseRing {
-  0% {
-    transform: scale(0.8);
-    opacity: 0.75;
-  }
-  100% {
-    transform: scale(2.3);
-    opacity: 0;
-  }
-}
-
-.animate-ripple-ring {
-  animation: pulseRing 3.2s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
 }
