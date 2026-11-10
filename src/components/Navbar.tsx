@@ -2,7 +2,6 @@ import React from 'react';
 import {
   ShieldCheck,
   Download,
-  Satellite,
   Users,
 } from 'lucide-react';
 import { AOI } from '../types/fire';
@@ -28,33 +27,27 @@ export const Navbar: React.FC<NavbarProps> = ({
   isLoadingLive,
 }) => {
   return (
-    <header className="sticky top-0 z-30 bg-[#071126]/90 backdrop-blur-md border-b border-white/10">
-      <div className="max-w-[1600px] mx-auto px-4 sm:px-6 py-3 flex flex-wrap items-center justify-between gap-3">
-        {/* Left: Official Cauchy's Comet Logo & NASA Space Apps 2026 Header */}
-        <div className="flex items-center gap-4">
-          <div className="flex items-center gap-2.5">
-            <img
-              src="/brand/logo-icon.svg"
-              alt="Cauchy's Comet Orbital Icon"
-              className="w-8 h-8 object-contain"
-            />
-            <div>
-              <img
-                src="/brand/logo-horizontal.svg"
-                alt="Cauchy's Comet"
-                className="h-4 sm:h-4.5 object-contain"
-              />
-              <div className="flex items-center gap-2 mt-1 text-[10px] tracking-[0.22em] uppercase text-slate-300 font-semibold">
-                <span>NASA SPACE APPS 2026</span>
-                <span className="text-amber-400">·</span>
-                <span className="text-amber-300">BANGLADESH</span>
-              </div>
-            </div>
+    <header className="sticky top-0 z-30 bg-[#060D1E]/95 backdrop-blur-md border-b border-white/[0.07]">
+      <div className="max-w-[1560px] mx-auto px-4 sm:px-6 py-2.5 flex items-center justify-between gap-4">
+        {/* Left: Clean Brand Wordmark */}
+        <div className="flex items-center gap-3">
+          <img
+            src="/brand/logo-icon.svg"
+            alt="Cauchy's Comet"
+            className="w-7 h-7 object-contain opacity-90"
+          />
+          <div className="flex items-baseline gap-2">
+            <span className="font-extrabold tracking-wider text-sm text-white">
+              CAUCHY&apos;S COMET
+            </span>
+            <span className="hidden sm:inline text-[10px] tracking-widest text-slate-400 font-mono uppercase">
+              NASA Space Apps 2026 · Chattogram
+            </span>
           </div>
         </div>
 
-        {/* Center: Curated AOI Switcher */}
-        <div className="flex items-center gap-1 bg-[#0A1732] p-1 rounded-xl border border-white/10 overflow-x-auto max-w-full">
+        {/* Center: Understated Segmented Region Selector */}
+        <div className="flex items-center gap-1 bg-[#09142B] p-1 rounded-xl border border-white/[0.06] overflow-x-auto max-w-[620px]">
           {PRESET_AOIS.map((aoi) => {
             const active = selectedAoi.id === aoi.id;
             return (
@@ -62,18 +55,17 @@ export const Navbar: React.FC<NavbarProps> = ({
                 key={aoi.id}
                 type="button"
                 onClick={() => onSelectAoi(aoi)}
-                className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all whitespace-nowrap flex items-center gap-1.5 ${
+                className={`px-3 py-1 rounded-lg text-xs font-medium transition-all whitespace-nowrap flex items-center gap-1.5 ${
                   active
-                    ? 'bg-gradient-to-r from-amber-500 to-amber-400 text-space-950 font-bold shadow-md shadow-amber-500/20'
-                    : 'text-slate-300 hover:text-white hover:bg-white/5'
+                    ? 'bg-[#16274D] text-amber-300 font-semibold shadow-sm border border-amber-400/25'
+                    : 'text-slate-400 hover:text-slate-200 hover:bg-white/[0.03]'
                 }`}
               >
                 {aoi.isFeaturedLocal && (
                   <span
                     className={`w-1.5 h-1.5 rounded-full ${
-                      active ? 'bg-space-950' : 'bg-amber-400'
+                      active ? 'bg-amber-400 shadow-[0_0_6px_#F59E0B]' : 'bg-slate-500'
                     }`}
-                    title="Bangladesh Local Showcase"
                   />
                 )}
                 {aoi.shortName}
@@ -82,48 +74,47 @@ export const Navbar: React.FC<NavbarProps> = ({
           })}
         </div>
 
-        {/* Right: Actions & Live Telemetry Status */}
+        {/* Right: Understated Actions */}
         <div className="flex items-center gap-2">
+          {/* Live telemetry indicator (quiet) */}
           <div
-            className="hidden xl:flex items-center gap-2 px-3 py-1.5 rounded-xl bg-[#0A1732] border border-white/10 text-xs text-slate-300"
-            title="Live NASA FIRMS Satellite Feed Status (Map Key Verified)"
+            className="hidden lg:flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-[#09142B] border border-white/[0.06] text-[11px] text-slate-400 font-mono"
+            title="NASA FIRMS Near Real-Time Active Fire Connection"
           >
-            <Satellite
-              className={`w-3.5 h-3.5 text-amber-400 ${
-                isLoadingLive ? 'animate-spin' : ''
+            <span
+              className={`w-1.5 h-1.5 rounded-full ${
+                isLoadingLive ? 'bg-amber-400 animate-ping' : 'bg-emerald-400'
               }`}
             />
-            <span>FIRMS Key Active:</span>
-            <span className="font-mono font-semibold text-amber-300">
-              {isLoadingLive ? 'Syncing...' : `${liveCount} NRT pts`}
-            </span>
+            <span>FIRMS NRT</span>
+            <span className="text-slate-300 font-semibold">({liveCount})</span>
           </div>
 
           <button
             type="button"
             onClick={onOpenValidation}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold bg-[#102246] hover:bg-[#172F5E] text-slate-100 border border-white/15 transition-colors"
+            className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-medium bg-[#09142B] hover:bg-[#112040] text-slate-300 hover:text-white border border-white/[0.06] transition-colors"
           >
-            <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
-            <span>Validation &amp; Limits</span>
+            <ShieldCheck className="w-3.5 h-3.5 text-slate-400" />
+            <span className="hidden md:inline">Validation</span>
           </button>
 
           <button
             type="button"
             onClick={onOpenTeam}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold bg-[#102246] hover:bg-[#172F5E] text-slate-100 border border-white/15 transition-colors"
+            className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-medium bg-[#09142B] hover:bg-[#112040] text-slate-300 hover:text-white border border-white/[0.06] transition-colors"
           >
-            <Users className="w-3.5 h-3.5 text-amber-300" />
-            <span>Team</span>
+            <Users className="w-3.5 h-3.5 text-slate-400" />
+            <span className="hidden md:inline">Team</span>
           </button>
 
           <button
             type="button"
             onClick={onOpenExport}
-            className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-bold bg-gradient-to-r from-amber-500 to-amber-400 hover:from-amber-400 hover:to-amber-300 text-space-950 shadow-md shadow-amber-500/20 transition-all"
+            className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-semibold bg-amber-500 hover:bg-amber-400 text-[#060D1E] shadow-sm transition-all"
           >
             <Download className="w-3.5 h-3.5" />
-            <span>Export CSV</span>
+            <span>Export</span>
           </button>
         </div>
       </div>
