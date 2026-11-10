@@ -1,13 +1,14 @@
 import React, { useCallback, useEffect, useId, useMemo, useRef, useState } from 'react';
 import {
-  Flame,
+  CheckCircle2,
+  Download,
+  HardHat,
   MapPin,
-  Sparkles,
+  Microscope,
+  ShieldCheck,
+  Trees,
   Users,
   X,
-  CheckCircle2,
-  ShieldCheck,
-  Download,
 } from 'lucide-react';
 import {
   AOI,
@@ -28,12 +29,42 @@ import { ScientificHonesty } from './components/ScientificHonesty';
 import { ExportModal } from './components/ExportModal';
 
 const TEAM_MEMBERS = [
-  { name: 'Naser-Al-Noman', handle: '@nasernoman277', role: 'Team Lead & Earth Observation Architecture' },
-  { name: 'Zaid Rehman', handle: '@zaidrehmann', role: 'Design, Visual Storytelling & Harmonization UX' },
-  { name: 'Sadman Zaman Khan', handle: '@sadmanzamankhan', role: 'Sensor Calibration & Data Systems' },
-  { name: 'Muhammad Junayed', handle: '@junayedoo7', role: 'Geospatial Analytics & FIRMS Integration' },
-  { name: 'Israt Jahan Lamia', handle: '@israt11', role: 'Environmental Science & Fire Regime Research' },
-  { name: 'Md. Meheraj Hossain', handle: '@mhmahir7', role: 'Statistical Verification & Web Engineering' },
+  {
+    name: 'NASER AL NOMAN',
+    handle: '@nasernoman277',
+    avatar: '/team/naser.png',
+    role: 'Team Lead & Earth Observation Architecture',
+  },
+  {
+    name: 'ZAID REHMAN',
+    handle: '@zaidrehmann',
+    avatar: '/team/zaid.png',
+    role: 'Design, Visual Storytelling & Harmonization UX',
+  },
+  {
+    name: 'SADMAN ZAMAN KHAN',
+    handle: '@sadmanzamankhan',
+    avatar: '/team/sadman.png',
+    role: 'Sensor Calibration & Data Systems',
+  },
+  {
+    name: 'MUHAMMAD JUNAYED',
+    handle: '@junayedoo7',
+    avatar: '/team/junayed.png',
+    role: 'Geospatial Analytics & FIRMS Integration',
+  },
+  {
+    name: 'ISRAT JAHAN LAMIA',
+    handle: '@israt11',
+    avatar: '/team/israt.png',
+    role: 'Environmental Science & Fire Regime Research',
+  },
+  {
+    name: 'MD. MEHERAJ HOSSAIN',
+    handle: '@mhmahir7',
+    avatar: '/team/meheraj.png',
+    role: 'Statistical Verification & Web Engineering',
+  },
 ];
 
 export function App() {
@@ -47,19 +78,16 @@ export function App() {
     dataset.metrics.currentWeekRecord
   );
 
-  // Sync selectedRecord when AOI changes
   useEffect(() => {
     setSelectedRecord(dataset.metrics.currentWeekRecord);
   }, [dataset]);
 
-  // Live NASA FIRMS Hotspots state
   const [liveHotspots, setLiveHotspots] = useState<LiveHotspot[]>([]);
   const [isLoadingLive, setIsLoadingLive] = useState<boolean>(false);
   const [liveSourceLabel, setLiveSourceLabel] = useState<string>(
-    'NASA FIRMS API Ready'
+    'NASA FIRMS Verified'
   );
 
-  // Modal states
   const [isValidationOpen, setIsValidationOpen] = useState(false);
   const [isExportOpen, setIsExportOpen] = useState(false);
   const [isTeamOpen, setIsTeamOpen] = useState(false);
@@ -117,14 +145,21 @@ export function App() {
     if (match) setSelectedRecord(match);
   };
 
+  const handleSelectWeekNumber = (week: number) => {
+    const match = dataset.records.find(
+      (r) => r.year === selectedRecord.year && r.week === week
+    );
+    if (match) setSelectedRecord(match);
+  };
+
   const handleSelectAnomalyYearWeek = (year: number, week: number) => {
     const match = dataset.records.find((r) => r.year === year && r.week === week);
     if (match) setSelectedRecord(match);
   };
 
   return (
-    <div className="min-h-screen bg-space-950 text-white flex flex-col">
-      {/* Top Navigation */}
+    <div className="min-h-screen text-white flex flex-col">
+      {/* Top Cosmic Navigation Bar */}
       <Navbar
         selectedAoi={selectedAoi}
         onSelectAoi={setSelectedAoi}
@@ -136,74 +171,29 @@ export function App() {
       />
 
       {/* Main Content Container */}
-      <main className="flex-1 max-w-[1600px] w-full mx-auto px-4 sm:px-6 py-5 space-y-5">
-        {/* Top 3-Step Harmonization Explainer Banner (Scene 6 of Video) */}
-        <section className="bg-gradient-to-r from-space-900 via-space-800/90 to-space-900 border border-white/10 rounded-2xl p-4 shadow-lg">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 items-center">
-            <div className="lg:col-span-4 space-y-1">
-              <div className="inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-amber-solar">
-                <Sparkles className="w-3.5 h-3.5 text-amber-fire" />
-                Why Harmonization Matters
-              </div>
-              <h1 className="text-base sm:text-lg font-extrabold text-white leading-snug">
-                25+ Years of Satellite Fire Records, One Comparable Calendar
-              </h1>
-              <p className="text-xs text-slate-300">
-                In 2012, sharper 375 m VIIRS sensors joined 1 km MODIS—causing raw fire counts to jump artificially. Cauchy&apos;s Comet aligns both instruments so a year is only called unusual when the fire is unusual, not the satellite.
-              </p>
+      <main className="flex-1 max-w-[1600px] w-full mx-auto px-4 sm:px-6 py-5 space-y-6">
+        {/* Hero Subtitle Banner (Matches "Build a web app that brings MODIS and VIIRS fire detections together into a burning activity calendar.") */}
+        <section className="flex flex-wrap items-end justify-between gap-4 border-b border-white/10 pb-4">
+          <div>
+            <div className="text-[11px] font-bold uppercase tracking-[0.24em] text-amber-400">
+              THE CHALLENGE · HARMONIZED EARTH OBSERVATION
             </div>
-
-            <div className="lg:col-span-8 grid grid-cols-1 sm:grid-cols-3 gap-2.5 text-xs">
-              <div className="bg-space-950/75 border border-white/10 rounded-xl p-3">
-                <div className="font-mono text-[10px] font-bold text-amber-solar uppercase">
-                  Step 01 · Spatio-Temporal Grid
-                </div>
-                <div className="font-bold text-white mt-0.5">
-                  Weekly Common-Grid Binning
-                </div>
-                <p className="text-[11px] text-slate-300 mt-1">
-                  Snap scattered MODIS (1 km) &amp; VIIRS (375 m) thermal detections onto a unified 52-week regional grid.
-                </p>
-              </div>
-
-              <div className="bg-space-950/75 border border-amber-fire/30 rounded-xl p-3">
-                <div className="font-mono text-[10px] font-bold text-amber-solar uppercase">
-                  Step 02 · Overlap Calibration
-                </div>
-                <div className="font-bold text-white mt-0.5">
-                  2012–2024 Co-Flight Scaling
-                </div>
-                <p className="text-[11px] text-slate-300 mt-1">
-                  Calibrate MODIS to VIIRS-equivalent (<span className="font-mono text-amber-solar">N_eq = {selectedAoi.calibrationAlpha}·N^{selectedAoi.calibrationBeta}</span>) using 13 years of simultaneous 13:30 overpasses.
-                </p>
-              </div>
-
-              <div className="bg-space-950/75 border border-emerald-500/30 rounded-xl p-3">
-                <div className="font-mono text-[10px] font-bold text-emerald-300 uppercase">
-                  Step 03 · Actionable Calendar
-                </div>
-                <div className="font-bold text-white mt-0.5">
-                  Anomaly &amp; Seasonality Alerts
-                </div>
-                <p className="text-[11px] text-slate-300 mt-1">
-                  Identify normal burning windows, flag unusual weeks via SFAI, and validate against NASA MCD64A1 Burned Area.
-                </p>
-              </div>
-            </div>
+            <h1 className="text-xl sm:text-2xl font-extrabold tracking-tight text-white mt-1">
+              Bring <span className="text-amber-400">MODIS</span> and{' '}
+              <span className="text-amber-400">VIIRS</span> fire detections together into a{' '}
+              <span className="text-amber-400">burning activity calendar.</span>
+            </h1>
           </div>
+
+          <p className="text-xs sm:text-sm text-slate-300 max-w-xl">
+            Explore past fire patterns, unusual conditions, and critical periods in any area—calibrated across the 2012–2024 overlap so sensor jumps disappear.
+          </p>
         </section>
 
-        {/* Responder Decision Intelligence Cards (Scene 7: Three Questions) */}
-        <CriticalPeriods
-          dataset={dataset}
-          selectedRecord={selectedRecord}
-          onSelectAnomalyYearWeek={handleSelectAnomalyYearWeek}
-        />
-
-        {/* Primary Split Workspace: Left AOI Map + Right 27-Year Burning Calendar */}
-        <div className="grid grid-cols-1 xl:grid-cols-12 gap-5 items-start">
-          {/* Left Column (5 cols): Interactive Map & Sensor Comparison Chart */}
-          <div className="xl:col-span-5 space-y-5">
+        {/* PRIMARY SPLIT WORKSPACE (Exact Visual Layout from Video Screenshot 3 & 5) */}
+        <div className="grid grid-cols-1 xl:grid-cols-12 gap-6 items-start">
+          {/* LEFT COLUMN (6 cols): #0B1B3A Topographic Map + Common Grid + Dual Stacked Line Charts */}
+          <div className="xl:col-span-6 space-y-6">
             <MapViewer
               aoi={selectedAoi}
               selectedWeekRecord={selectedRecord}
@@ -211,6 +201,7 @@ export function App() {
               isLoadingLive={isLoadingLive}
               liveSourceLabel={liveSourceLabel}
               onSelectCustomAoi={setSelectedAoi}
+              onSelectWeekNumber={handleSelectWeekNumber}
               onRefreshLive={() => syncLiveFirms(selectedAoi)}
             />
 
@@ -221,8 +212,8 @@ export function App() {
             />
           </div>
 
-          {/* Right Column (7 cols): The 27-Year Burning Activity Calendar Heatmap */}
-          <div className="xl:col-span-7 space-y-5">
+          {/* RIGHT COLUMN (6 cols): Tactile Calendar Heatmap + Golden Matrix + CRITICAL PERIODS Card (Exact Screenshot 3 Right Stack) */}
+          <div className="xl:col-span-6 space-y-6">
             <BurningCalendar
               dataset={dataset}
               viewMode={viewMode}
@@ -233,63 +224,122 @@ export function App() {
               onSelectRecord={setSelectedRecord}
             />
 
-            {/* Inline Honesty & Validation Summary Card (Scene 8) */}
-            <div className="bg-space-900/85 border border-white/10 rounded-2xl p-4 flex flex-wrap items-center justify-between gap-4">
-              <div className="flex items-start gap-3 max-w-2xl">
-                <div className="w-9 h-9 rounded-xl bg-emerald-500/15 border border-emerald-500/35 flex items-center justify-center shrink-0 mt-0.5">
-                  <ShieldCheck className="w-5 h-5 text-emerald-400" />
-                </div>
-                <div>
-                  <h3 className="text-sm font-bold text-white flex items-center gap-2">
-                    <span>Scientific Honesty &amp; Ground-Truth Verification</span>
-                    <span className="px-2 py-0.5 text-[10px] font-mono rounded bg-emerald-500/20 text-emerald-300">
-                      MCD64A1 r = {dataset.metrics.mcd64a1Correlation}
-                    </span>
-                  </h3>
-                  <p className="text-xs text-slate-300 mt-0.5">
-                    Checked across the 2012 sensor transition years, cross-verified with NASA&apos;s independent burned-area product, with cloud cover, thick canopy smoke, and diurnal overpass limits stated openly.
-                  </p>
-                </div>
-              </div>
+            <CriticalPeriods
+              dataset={dataset}
+              selectedRecord={selectedRecord}
+              onSelectAnomalyYearWeek={handleSelectAnomalyYearWeek}
+            />
+          </div>
+        </div>
 
-              <div className="flex items-center gap-2">
-                <button
-                  type="button"
-                  onClick={() => setIsValidationOpen(true)}
-                  className="px-3 py-1.5 rounded-xl text-xs font-semibold bg-space-800 hover:bg-space-700 text-white border border-white/15 transition-colors"
-                >
-                  Inspect Full Validation
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setIsExportOpen(true)}
-                  className="px-3.5 py-1.5 rounded-xl text-xs font-bold bg-amber-fire hover:bg-amber-glow text-space-950 flex items-center gap-1.5"
-                >
-                  <Download className="w-3.5 h-3.5" />
-                  <span>Download CSV</span>
-                </button>
+        {/* SCENE 4 REPLICA: "This matters to real people." (Responders, Scientists, Land Managers Cards) */}
+        <section className="bg-[#09152E]/90 border border-white/10 rounded-3xl p-5 sm:p-6 shadow-2xl space-y-5">
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <div>
+              <h2 className="text-base sm:text-lg font-bold text-white">
+                This matters to real people.
+              </h2>
+              <p className="text-xs text-slate-300">
+                One comparable 27-year record that responders, scientists, and land managers can trust for {selectedAoi.name}
+              </p>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <button
+                type="button"
+                onClick={() => setIsValidationOpen(true)}
+                className="px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-[#102246] hover:bg-[#172F5E] text-white border border-white/15 flex items-center gap-1.5"
+              >
+                <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
+                <span>Check Transition &amp; MCD64A1 Validation</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => setIsExportOpen(true)}
+                className="px-3.5 py-1.5 rounded-xl text-xs font-bold bg-amber-500 hover:bg-amber-400 text-space-950 flex items-center gap-1.5"
+              >
+                <Download className="w-3.5 h-3.5" />
+                <span>Download Harmonized CSV</span>
+              </button>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {/* Card 1: Responders */}
+            <div className="bg-[#0B1C3D]/80 border border-sky-400/20 rounded-2xl p-5 flex flex-col items-center text-center space-y-2.5">
+              <HardHat className="w-9 h-9 text-white stroke-[1.6]" />
+              <div className="w-8 h-8 rounded-lg border border-white/60 flex items-center justify-center font-bold text-amber-400 text-sm">
+                ?
+              </div>
+              <h3 className="text-base font-bold text-white">Responders</h3>
+              <p className="text-xs text-sky-300 font-medium">
+                When does fire season really start, and is this week unusual?
+              </p>
+              <div className="w-full pt-2 border-t border-white/10 text-xs text-slate-200 font-mono">
+                Onset: <strong>{dataset.metrics.onsetMonthLabel}</strong> · Current W{selectedRecord.week}:{' '}
+                <strong className="text-amber-300 uppercase">{selectedRecord.anomalyStatus}</strong>
+              </div>
+            </div>
+
+            {/* Card 2: Scientists */}
+            <div className="bg-[#0B1C3D]/80 border border-sky-400/20 rounded-2xl p-5 flex flex-col items-center text-center space-y-2.5">
+              <Microscope className="w-9 h-9 text-white stroke-[1.6]" />
+              <div className="w-8 h-8 rounded-lg border border-white/60 flex items-center justify-center font-bold text-amber-400 text-sm">
+                ?
+              </div>
+              <h3 className="text-base font-bold text-white">Scientists</h3>
+              <p className="text-xs text-sky-300 font-medium">
+                How is the fire regime changing over time without sensor bias?
+              </p>
+              <div className="w-full pt-2 border-t border-white/10 text-xs text-slate-200 font-mono">
+                Real Trend:{' '}
+                <strong className="text-amber-300">
+                  {dataset.metrics.harmonizedRealChangePct >= 0
+                    ? `+${dataset.metrics.harmonizedRealChangePct}%`
+                    : `${dataset.metrics.harmonizedRealChangePct}%`}
+                </strong>{' '}
+                (Raw artifact was +{dataset.metrics.rawArtificialJumpPct}%)
+              </div>
+            </div>
+
+            {/* Card 3: Land Managers */}
+            <div className="bg-[#0B1C3D]/80 border border-sky-400/20 rounded-2xl p-5 flex flex-col items-center text-center space-y-2.5">
+              <Trees className="w-9 h-9 text-white stroke-[1.6]" />
+              <div className="w-8 h-8 rounded-lg border border-white/60 flex items-center justify-center font-bold text-amber-400 text-sm">
+                ?
+              </div>
+              <h3 className="text-base font-bold text-white">Land managers</h3>
+              <p className="text-xs text-sky-300 font-medium">
+                Which critical weeks require pre-positioned crews and resources?
+              </p>
+              <div className="w-full pt-2 border-t border-white/10 text-xs text-slate-200 font-mono">
+                Peak Readiness: <strong className="text-amber-300">{dataset.metrics.peakPeriodLabel}</strong>
               </div>
             </div>
           </div>
-        </div>
+        </section>
       </main>
 
       {/* Footer */}
-      <footer className="mt-8 border-t border-white/10 bg-space-950/90 py-4 px-4 sm:px-6 text-xs text-slate-300">
+      <footer className="mt-8 border-t border-white/10 bg-[#060F22] py-4 px-4 sm:px-6 text-xs text-slate-300">
         <div className="max-w-[1600px] mx-auto flex flex-wrap items-center justify-between gap-3">
-          <div className="flex items-center gap-2">
-            <Flame className="w-4 h-4 text-amber-fire" />
-            <span className="font-bold text-white">Team Cauchy&apos;s Comet</span>
+          <div className="flex items-center gap-2.5">
+            <img
+              src="/brand/logo-icon.svg"
+              alt="Cauchy's Comet"
+              className="w-4 h-4 object-contain"
+            />
+            <span className="font-bold text-white tracking-wider">CAUCHY&apos;S COMET</span>
             <span>· 2026 NASA International Space Apps Challenge (Chattogram, Bangladesh)</span>
           </div>
           <div className="flex items-center gap-4">
-            <span>Challenge: Harmonization of MODIS &amp; VIIRS Hot Spots</span>
+            <span>Harmonization of MODIS &amp; VIIRS Hot Spots</span>
             <button
               type="button"
               onClick={() => setIsTeamOpen(true)}
-              className="text-amber-solar hover:underline font-semibold"
+              className="text-amber-300 hover:underline font-semibold"
             >
-              View Team Roster (6 Members)
+              Meet Team Cauchy&apos;s Comet
             </button>
           </div>
         </div>
@@ -309,25 +359,27 @@ export function App() {
         liveHotspots={liveHotspots}
       />
 
-      {/* Team Cauchy's Comet Modal (Scene 2 of Video) */}
+      {/* Team Cauchy's Comet Modal with Official Comet-Ring Portraits from Video Scene 2 */}
       <dialog
         ref={teamDialogRef}
         {...({ closedby: 'any' } as any)}
         aria-labelledby={teamTitleId}
         onClose={() => setIsTeamOpen(false)}
-        className="w-full max-w-2xl rounded-2xl bg-space-900 text-white border border-white/15 shadow-2xl p-0 overflow-hidden"
+        className="w-full max-w-3xl rounded-3xl bg-[#08152E] text-white border border-white/15 shadow-2xl p-0 overflow-hidden"
       >
-        <div className="p-5 bg-space-950 border-b border-white/10 flex items-center justify-between">
-          <div className="flex items-center gap-2.5">
-            <div className="w-9 h-9 rounded-xl bg-amber-fire/20 border border-amber-fire/40 flex items-center justify-center">
-              <Users className="w-5 h-5 text-amber-solar" />
-            </div>
+        <div className="p-5 bg-[#060F22] border-b border-white/10 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <img
+              src="/brand/logo-icon.svg"
+              alt="Cauchy's Comet"
+              className="w-8 h-8 object-contain"
+            />
             <div>
-              <h2 id={teamTitleId} className="text-base font-extrabold text-white">
-                Team Cauchy&apos;s Comet — Chattogram, Bangladesh
+              <h2 id={teamTitleId} className="text-base font-extrabold tracking-wider text-white">
+                CAUCHY&apos;S COMET · BANGLADESH
               </h2>
               <p className="text-xs text-slate-300">
-                2026 NASA Space Apps Challenge · Harmonization of MODIS and VIIRS Hot Spots
+                2026 NASA Space Apps Challenge (Chattogram) · Harmonization of MODIS &amp; VIIRS Hot Spots
               </p>
             </div>
           </div>
@@ -341,46 +393,46 @@ export function App() {
           </button>
         </div>
 
-        <div className="p-5 space-y-4 text-xs">
-          <p className="text-slate-200 leading-relaxed">
-            &ldquo;We are a team of builders who believe that Earth observation data should be directly usable by the emergency responders, scientists, and land managers who protect land and lives.&rdquo;
-          </p>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <div className="p-6 space-y-5 text-xs">
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
             {TEAM_MEMBERS.map((member) => (
               <div
                 key={member.handle}
-                className="bg-space-950/85 border border-white/10 rounded-xl p-3 flex items-start gap-3"
+                className="bg-[#0B1C3D]/75 border border-white/10 rounded-2xl p-4 flex flex-col items-center text-center"
               >
-                <div className="w-8 h-8 rounded-lg bg-amber-fire/15 border border-amber-fire/35 flex items-center justify-center text-amber-solar font-bold shrink-0">
-                  <Sparkles className="w-4 h-4" />
+                <img
+                  src={member.avatar}
+                  alt={member.name}
+                  className="w-24 h-24 object-contain mb-2.5"
+                />
+                <div className="font-bold text-white text-xs tracking-wider">
+                  {member.name}
                 </div>
-                <div>
-                  <div className="font-bold text-white text-sm">{member.name}</div>
-                  <div className="text-[11px] font-mono text-amber-solar">{member.handle} · Bangladesh</div>
-                  <div className="text-[11px] text-slate-300 mt-0.5">{member.role}</div>
+                <div className="text-[10px] font-mono text-amber-300 mt-0.5">
+                  {member.handle}
                 </div>
+                <div className="text-[11px] text-slate-300 mt-1">{member.role}</div>
               </div>
             ))}
           </div>
 
-          <div className="bg-space-950/90 border border-white/10 rounded-xl p-3 flex flex-wrap items-center justify-between gap-2 text-[11px] text-slate-300">
+          <div className="bg-[#060F22] border border-white/10 rounded-xl p-3 flex flex-wrap items-center justify-between gap-2 text-[11px] text-slate-300">
             <span className="flex items-center gap-1.5">
-              <MapPin className="w-3.5 h-3.5 text-amber-fire" />
+              <MapPin className="w-3.5 h-3.5 text-amber-400" />
               Local Event: Chattogram, Bangladesh
             </span>
             <span className="flex items-center gap-1.5 text-emerald-300">
               <CheckCircle2 className="w-3.5 h-3.5" />
-              Prescreening Video &amp; Harmonized Web Application Aligned
+              We believe Earth data should be usable by the people who protect land and lives.
             </span>
           </div>
         </div>
 
-        <div className="p-4 bg-space-950 border-t border-white/10 flex justify-end">
+        <div className="p-4 bg-[#060F22] border-t border-white/10 flex justify-end">
           <button
             type="button"
             onClick={() => teamDialogRef.current?.close()}
-            className="px-4 py-1.5 rounded-lg bg-amber-fire hover:bg-amber-glow text-space-950 font-bold text-xs"
+            className="px-4 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-space-950 font-bold text-xs"
           >
             Close
           </button>
