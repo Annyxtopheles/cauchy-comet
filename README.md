@@ -1,7 +1,9 @@
 # Cauchy's Comet: The Harmonized Burning Activity Calendar
 
 **2026 NASA International Space Apps Challenge — Chattogram, Bangladesh**  
-**Challenge:** Harmonization of MODIS and VIIRS Hot Spots
+**Challenge:** Harmonization of MODIS and VIIRS Hot Spots  
+
+🔗 **Live Web Application**: [https://Annyxtopheles.github.io/cauchy-comet/](https://Annyxtopheles.github.io/cauchy-comet/)
 
 ---
 
